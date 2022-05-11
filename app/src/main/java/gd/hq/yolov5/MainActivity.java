@@ -36,9 +36,7 @@ import android.util.Size;
 import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.SeekBar;
 import android.widget.TextView;
 
 import java.io.ByteArrayOutputStream;
@@ -55,8 +53,6 @@ public class MainActivity extends AppCompatActivity {
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
     private ImageView resultImageView;
-    private SeekBar nmsSeekBar;
-    private SeekBar thresholdSeekBar;
     private TextView thresholdTextview;
     private TextView tvInfo;
     private double threshold = 0.3, nms_threshold = 0.7;
@@ -87,53 +83,8 @@ public class MainActivity extends AppCompatActivity {
         resultImageView = findViewById(R.id.imageView);
         thresholdTextview = findViewById(R.id.valTxtView);
         tvInfo = findViewById(R.id.tv_info);
-        nmsSeekBar = findViewById(R.id.nms_seek);
-        thresholdSeekBar = findViewById(R.id.threshold_seek);
         final String format = "Thresh: %.2f, NMS: %.2f";
         thresholdTextview.setText(String.format(Locale.ENGLISH, format, threshold, nms_threshold));
-        nmsSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                nms_threshold = i / 100.f;
-                thresholdTextview.setText(String.format(Locale.ENGLISH, format, threshold, nms_threshold));
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
-        thresholdSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                threshold = i / 100.f;
-                thresholdTextview.setText(String.format(Locale.ENGLISH, format, threshold, nms_threshold));
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
-        Button inference = findViewById(R.id.button);
-        inference.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_PICK);
-                intent.setType("image/*");
-                startActivityForResult(intent, REQUEST_PICK_IMAGE);
-            }
-        });
 
         resultImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -179,8 +130,8 @@ public class MainActivity extends AppCompatActivity {
         // 1. preview
         PreviewConfig previewConfig = new PreviewConfig.Builder()
                 .setLensFacing(CameraX.LensFacing.BACK)
-//                .setTargetAspectRatio(Rational.NEGATIVE_INFINITY)  // 宽高比
-                .setTargetResolution(new Size(416, 416))  // 分辨率
+//                .setTargetAspectRatio(Rational.NEGATIVE_INFINITY)
+                .setTargetResolution(new Size(416, 416))
                 .build();
 
         Preview preview = new Preview(previewConfig);
