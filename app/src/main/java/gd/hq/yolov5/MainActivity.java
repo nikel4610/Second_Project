@@ -44,6 +44,8 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
@@ -155,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
     private UseCase gainAnalyzer(DetectAnalyzer detectAnalyzer) {
         ImageAnalysisConfig.Builder analysisConfigBuilder = new ImageAnalysisConfig.Builder();
         analysisConfigBuilder.setImageReaderMode(ImageAnalysis.ImageReaderMode.ACQUIRE_LATEST_IMAGE);
-        analysisConfigBuilder.setTargetResolution(new Size(416, 416));  // 输出预览图像尺寸
+        analysisConfigBuilder.setTargetResolution(new Size(416, 416));
         ImageAnalysisConfig config = analysisConfigBuilder.build();
         ImageAnalysis analysis = new ImageAnalysis(config);
         analysis.setAnalyzer(detectAnalyzer);
@@ -171,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
             }
             detecting.set(true);
             startTime = System.currentTimeMillis();
-            final Bitmap bitmapsrc = imageToBitmap(image);  // 格式转换
+            final Bitmap bitmapsrc = imageToBitmap(image);
             Thread detectThread = new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -336,6 +338,5 @@ public class MainActivity extends AppCompatActivity {
         }
         return returnBm;
     }
-
 
 }
