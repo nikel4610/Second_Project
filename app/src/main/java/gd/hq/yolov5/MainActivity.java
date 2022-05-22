@@ -38,10 +38,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.gun0912.tedpermission.TedPermission;
+import com.gun0912.tedpermission.PermissionListener;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.Timer;
@@ -72,15 +77,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        int permission = ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        if (permission != PackageManager.PERMISSION_GRANTED) {
-            // We don't have permission so prompt the user
-            ActivityCompat.requestPermissions(
-                    this,
-                    PERMISSIONS_STORAGE,
-                    REQUEST_EXTERNAL_STORAGE
-            );
-        }
+
+        TedPermission.with(getApplicationContext())
+                        .setPermissionListener(permissionListener)
+                                .setRationaleMessage("카메라 권한이 필요합니다.")
+                                        .setDeniedMessage("권한을 허용하지 않으면 카메라를 사용할 수 없습니다.")
+                                                .setPermissions(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                                                        .check();
+
         YOLOv5.init(getAssets());
         resultImageView = findViewById(R.id.imageView);
         thresholdTextview = findViewById(R.id.valTxtView);
@@ -251,15 +255,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        for (int result : grantResults) {
-            if (result != PackageManager.PERMISSION_GRANTED) {
-                this.finish();
-            }
-        }
-    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -338,5 +334,17 @@ public class MainActivity extends AppCompatActivity {
         }
         return returnBm;
     }
+
+    PermissionListener permissionListener = new PermissionListener() {
+        @Override
+        public void onPermissionGranted() {
+            Toast.makeText(MainActivity.this, "권한이 허용됨", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+            Toast.makeText(MainActivity.this, "권한이 거부됨", Toast.LENGTH_SHORT).show();
+        }
+    };
 
 }
