@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
     private double threshold = 0.3, nms_threshold = 0.7;
     private TextureView viewFinder;
     private TextToSpeech tts;
+    private TextView objectinfo;
 
     private AtomicBoolean detecting = new AtomicBoolean(false);
     private AtomicBoolean detectPhoto = new AtomicBoolean(false);
@@ -88,6 +89,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        objectinfo = (TextView) findViewById(R.id.objectinfo);
 
         TedPermission.with(getApplicationContext())
                         .setPermissionListener(permissionListener)
@@ -224,6 +227,7 @@ public class MainActivity extends AppCompatActivity {
                             tvInfo.setText(String.format(Locale.CHINESE,
                                     "Size: %dx%d\nTime: %.3f s\nFPS: %.3f",
                                     height, width, dur / 1000.0, fps));
+                            // objectinfo.setText() ??
                         }
                     });
                 }
@@ -359,5 +363,3 @@ public class MainActivity extends AppCompatActivity {
     };
 
 }
-
-
