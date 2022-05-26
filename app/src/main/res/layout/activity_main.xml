@@ -51,5 +51,4 @@
         android:text="000x000 FPS:x.xxx"
         app:layout_constraintStart_toEndOf="@+id/view_finder"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

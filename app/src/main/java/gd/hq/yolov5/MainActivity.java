@@ -29,6 +29,7 @@ import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.speech.tts.TextToSpeech;
 import android.text.PrecomputedText;
 import android.util.Log;
 import android.util.Rational;
@@ -64,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView tvInfo;
     private double threshold = 0.3, nms_threshold = 0.7;
     private TextureView viewFinder;
+    private TextToSpeech tts;
 
     private AtomicBoolean detecting = new AtomicBoolean(false);
     private AtomicBoolean detectPhoto = new AtomicBoolean(false);
@@ -77,6 +79,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if(status != TextToSpeech.ERROR) {
+                    tts.setLanguage(Locale.KOREAN);
+                }
+            }
+        });
 
         TedPermission.with(getApplicationContext())
                         .setPermissionListener(permissionListener)
