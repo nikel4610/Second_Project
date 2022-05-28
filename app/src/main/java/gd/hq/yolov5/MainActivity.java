@@ -34,6 +34,8 @@ import android.text.PrecomputedText;
 import android.util.Log;
 import android.util.Rational;
 import android.util.Size;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,6 +77,8 @@ public class MainActivity extends AppCompatActivity {
     private long endTime = 0;
     private int width;
     private int height;
+    View view;
+    GestureDetector gestureDetector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +91,23 @@ public class MainActivity extends AppCompatActivity {
                 if(status != TextToSpeech.ERROR) {
                     tts.setLanguage(Locale.KOREAN);
                 }
+            }
+        });
+
+        view = findViewById(R.id.view);
+        view.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                gestureDetector.onTouchEvent(event);
+                return true;
+            }
+                                });
+        gestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
+            @Override
+            public boolean onSingleTapUp(MotionEvent e) {
+                tts.setSpeechRate(2.0f);
+                tts.speak(objectinfo.getText().toString(), TextToSpeech.QUEUE_FLUSH, null);
+                return true;
             }
         });
 
@@ -274,9 +295,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         CameraX.unbindAll();
         super.onDestroy();
+        if(tts != null){
+            tts.stop();
+            tts.shutdown();
+            tts = null;
+        }
     }
-
-
 
 
     @Override
