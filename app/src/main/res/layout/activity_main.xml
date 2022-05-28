@@ -8,12 +8,11 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="411dp"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="186dp"
         android:background="#A3CCA3"
         android:src="#A3CCA3"
-        app:layout_constraintBottom_toTopOf="@+id/objectinfo"
+        app:layout_constraintBottom_toTopOf="@+id/tv_info"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -23,27 +22,19 @@
         android:id="@+id/view_finder"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginEnd="2dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintDimensionRatio="h,4:3"
-        app:layout_constraintEnd_toStartOf="@+id/objectinfo"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/valTxtView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="76dp"
-        android:layout_marginEnd="109dp"
         android:text="Thresh:x.xx,NMS:x.xx"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/view_finder"
-        app:layout_constraintTop_toBottomOf="@+id/tv_info"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintStart_toStartOf="@+id/objectinfo"
+        app:layout_constraintTop_toBottomOf="@+id/objectinfo" />
 
     <TextView
         android:id="@+id/tv_info"
@@ -52,20 +43,20 @@
         android:paddingLeft="5dp"
         android:paddingTop="2dp"
         android:text="000x000 FPS:x.xxx"
-        app:layout_constraintStart_toEndOf="@+id/view_finder"
+        app:layout_constraintBottom_toTopOf="@+id/objectinfo"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <TextView
         android:id="@+id/objectinfo"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="236dp"
-        android:layout_marginBottom="17dp"
+        android:gravity="fill_vertical"
         android:paddingLeft="5dp"
         android:paddingTop="2dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/valTxtView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/view_finder"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_info" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
