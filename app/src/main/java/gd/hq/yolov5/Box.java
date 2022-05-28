@@ -43,4 +43,8 @@ public class Box {
         Random random = new Random(label);
         return Color.argb(255,random.nextInt(256),random.nextInt(256),random.nextInt(256));
     }
+
+    public char[] getConfidence() {
+        return String.format("").toCharArray();
+    }
 }

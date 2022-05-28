@@ -227,7 +227,14 @@ public class MainActivity extends AppCompatActivity {
                             tvInfo.setText(String.format(Locale.CHINESE,
                                     "Size: %dx%d\nTime: %.3f s\nFPS: %.3f",
                                     height, width, dur / 1000.0, fps));
-                            // objectinfo.setText() ??
+                            // 인식된 물건 정보를 받아옴
+                            if (result.length > 0) {
+                                StringBuilder sb = new StringBuilder();
+                                for (Box box : result) {
+                                    sb.append(box.getLabel()).append(" ").append(box.getConfidence()).append("\n");
+                                }
+                                objectinfo.setText(sb.toString());
+                            }
                         }
                     });
                 }
