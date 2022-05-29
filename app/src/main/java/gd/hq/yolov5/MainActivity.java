@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
         gestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
             @Override
             public boolean onSingleTapUp(MotionEvent e) {
-                tts.setSpeechRate(2.0f);
+                tts.setSpeechRate(1.5f);
                 tts.speak(objectinfo.getText().toString(), TextToSpeech.QUEUE_FLUSH, null);
                 return true;
             }
@@ -252,7 +252,7 @@ public class MainActivity extends AppCompatActivity {
                             if (result.length > 0) {
                                 StringBuilder sb = new StringBuilder();
                                 for (Box box : result) {
-                                    sb.append(box.getLabel()).append(" ").append(box.getConfidence()).append("\n");
+                                    sb.append(box.getLabel()).append(" ").append(box.getConfidence());
                                 }
                                 objectinfo.setText(sb.toString());
                             }
