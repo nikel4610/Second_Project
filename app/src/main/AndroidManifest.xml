@@ -32,6 +32,10 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
+
+            <meta-data
+                android:name="com.google.android.maps.v2.API_KEY"
+                android:value="${google_api_key}" />
         </provider>
 
     </application>
