@@ -5,6 +5,7 @@ properties.load(project.rootProject.file('local.properties').newDataInputStream(
 
 android {
     compileSdkVersion 32
+    buildToolsVersion "30.0.3"
     defaultConfig {
         applicationId "gd.hq.yolov5"
         minSdkVersion 24
@@ -13,6 +14,8 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField "String", "GOOGLE_API_KEY", properties['google_api_key']
+
+        manifestPlaceholders = [GOOGLE_API_KEY: 'google_api_key']
         externalNativeBuild {
             cmake {
                 cppFlags ""
