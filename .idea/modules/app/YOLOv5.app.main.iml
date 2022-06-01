@@ -77,9 +77,9 @@
     <orderEntry type="library" name="Gradle: com.google.android.datatransport:transport-backend-cct:2.3.2@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.google.android.datatransport:transport-runtime:2.2.5@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.google.firebase:firebase-encoders-json:17.1.0@aar" level="project" />
-    <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-base:17.4.0@aar" level="project" />
-    <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-basement:17.4.0@aar" level="project" />
-    <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-tasks:17.2.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-base:18.0.1@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-basement:18.0.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-tasks:18.0.1@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-clearcut:17.0.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-phenotype:17.0.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.google.firebase:firebase-components:16.0.0@aar" level="project" />
@@ -87,7 +87,9 @@
     <orderEntry type="library" name="Gradle: com.google.mlkit:vision-common:16.3.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.exifinterface:exifinterface:1.0.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: gun0912.ted:tedpermission:2.0.0@aar" level="project" />
-    <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-maps:17.0.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-maps:18.0.2@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-location:19.0.1@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-places-placereport:17.0.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.rmtheis:tess-two:9.0.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.camera:camera-core:1.0.0-alpha05@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.camera:camera-camera2:1.0.0-alpha05@aar" level="project" />

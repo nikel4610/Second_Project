@@ -47,4 +47,5 @@ public class Box {
     public char[] getConfidence() {
         return String.format("").toCharArray();
     }
+
 }
