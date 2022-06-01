@@ -117,7 +117,8 @@ public class MainActivity extends AppCompatActivity {
                         .setPermissionListener(permissionListener)
                                 .setRationaleMessage("카메라 권한이 필요합니다.")
                                         .setDeniedMessage("권한을 허용하지 않으면 카메라를 사용할 수 없습니다.")
-                                                .setPermissions(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                                                .setPermissions(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                                        Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
                                                         .check();
 
         YOLOv5.init(getAssets());
