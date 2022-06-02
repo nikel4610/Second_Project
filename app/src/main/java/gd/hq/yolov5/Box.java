@@ -48,4 +48,6 @@ public class Box {
         return String.format("").toCharArray();
     }
 
+    public char[] getLocation() { return String.format("").toCharArray(); }
+
 }

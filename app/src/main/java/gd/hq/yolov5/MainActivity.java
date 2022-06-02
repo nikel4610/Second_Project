@@ -1,6 +1,5 @@
 package gd.hq.yolov5;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.camera.core.CameraX;
@@ -26,17 +25,11 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.YuvImage;
-import android.location.Location;
-import android.location.LocationManager;
-import android.location.LocationListener;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.speech.tts.TextToSpeech;
-import android.text.PrecomputedText;
-import android.util.Log;
-import android.util.Rational;
 import android.util.Size;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -46,6 +39,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 
 import com.gun0912.tedpermission.TedPermission;
 import com.gun0912.tedpermission.PermissionListener;
@@ -56,8 +52,6 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
@@ -73,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
     private TextureView viewFinder;
     private TextToSpeech tts;
     private TextView objectinfo;
+    private TextView locationinfo;
 
     private AtomicBoolean detecting = new AtomicBoolean(false);
     private AtomicBoolean detectPhoto = new AtomicBoolean(false);
@@ -84,6 +79,9 @@ public class MainActivity extends AppCompatActivity {
     View view;
     GestureDetector gestureDetector;
 
+    double mLatitude; // 위도
+    double mLongitude; // 경도
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,11 +90,29 @@ public class MainActivity extends AppCompatActivity {
         tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
-                if(status != TextToSpeech.ERROR) {
+                if (status != TextToSpeech.ERROR) {
                     tts.setLanguage(Locale.KOREAN);
                 }
             }
         });
+
+        LocationManager locationManager = (LocationManager)
+                getSystemService(Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        Location loc_Current = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+        mLatitude = loc_Current.getLatitude(); // 위도
+        mLongitude = loc_Current.getLongitude(); // 경도
+
 
         view = findViewById(R.id.view);
         view.setOnTouchListener(new View.OnTouchListener() {
@@ -112,6 +128,12 @@ public class MainActivity extends AppCompatActivity {
                 tts.setSpeechRate(1.5f);
                 tts.speak(objectinfo.getText().toString(), TextToSpeech.QUEUE_FLUSH, null);
                 return true;
+            }
+
+            @Override
+            public void onLongPress(MotionEvent e) {
+                // 위치 알려주기
+
             }
         });
 
