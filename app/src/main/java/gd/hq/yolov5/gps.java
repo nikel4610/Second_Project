@@ -43,35 +43,22 @@ public class gps extends Service implements LocationListener {
     public gps(Context context) {
         this.mContext = context;
         getLocation();
-
     }
 
-
-    @TargetApi(23)
     public Location getLocation() {
         if ( Build.VERSION.SDK_INT >= 23 &&
                 ContextCompat.checkSelfPermission(
-
                         mContext, android.Manifest.permission.ACCESS_FINE_LOCATION )
-
                         != PackageManager.PERMISSION_GRANTED &&
-
                 ContextCompat.checkSelfPermission(
-
                         mContext, android.Manifest.permission.ACCESS_COARSE_LOCATION)
-
                         != PackageManager.PERMISSION_GRANTED) {
-
-
             return null;
-
         }
-
 
         try {
             locationManager = (LocationManager) mContext
                     .getSystemService(LOCATION_SERVICE);
-
 
             // GPS 정보 가져오기
             isGPSEnabled = locationManager
@@ -100,6 +87,7 @@ public class gps extends Service implements LocationListener {
                             // 위도 경도 저장
                             lat = location.getLatitude();
                             lon = location.getLongitude();
+
                         }
                     }
                 }
@@ -134,7 +122,6 @@ public class gps extends Service implements LocationListener {
         }
     }
 
-    //위도값 가져오기
     public double getLatitude(){
         if(location != null){
             lat = location.getLatitude();
@@ -142,17 +129,11 @@ public class gps extends Service implements LocationListener {
         return lat;
     }
 
-    //경도값 가져오기
     public double getLongitude(){
         if(location != null){
             lon = location.getLongitude();
         }
         return lon;
-    }
-
-    //gps가 켜져있는지 확인
-    public boolean isGetLocation() {
-        return this.isGetLocation;
     }
 
     @Override
@@ -163,5 +144,9 @@ public class gps extends Service implements LocationListener {
     @Override
     public void onLocationChanged(@NonNull Location location) {
 
+    }
+
+    public boolean isGetLocation() {
+        return this.isGetLocation;
     }
 }

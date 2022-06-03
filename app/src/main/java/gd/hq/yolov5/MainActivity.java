@@ -10,6 +10,8 @@ import androidx.camera.core.Preview;
 import androidx.camera.core.PreviewConfig;
 import androidx.camera.core.UseCase;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
 
 import android.Manifest;
@@ -32,8 +34,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.speech.tts.TextToSpeech;
+import android.util.Log;
 import android.util.Size;
 import android.view.GestureDetector;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.TextureView;
 import android.view.View;
@@ -83,9 +87,6 @@ public class MainActivity extends AppCompatActivity {
     View view;
     GestureDetector gestureDetector;
 
-    double lat;
-    double lon;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,22 +101,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Geocoder geocoder = new Geocoder(this);
-
-        List<Address> address = null;
-
-        try {
-            address = geocoder.getFromLocation(lat, lon, 1);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        if (address != null) {
-            if(address.size() != 0) {
-                String str_Addr = address.get(0).getAddressLine(0);
-                locationinfo.append(str_Addr);
-            }
-        }
+        locationinfo = findViewById(R.id.locationinfo);
 
         view = findViewById(R.id.view);
         view.setOnTouchListener(new View.OnTouchListener() {
@@ -124,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
                 gestureDetector.onTouchEvent(event);
                 return true;
             }
-                                });
+        });
         gestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
             @Override
             public boolean onSingleTapUp(MotionEvent e) {
@@ -143,12 +129,13 @@ public class MainActivity extends AppCompatActivity {
         objectinfo = (TextView) findViewById(R.id.objectinfo);
 
         TedPermission.with(getApplicationContext())
-                        .setPermissionListener(permissionListener)
-                                .setRationaleMessage("카메라 권한이 필요합니다.")
-                                        .setDeniedMessage("권한을 허용하지 않으면 카메라를 사용할 수 없습니다.")
-                                                .setPermissions(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                                                        Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
-                                                        .check();
+                .setPermissionListener(permissionListener)
+                .setRationaleMessage("카메라 권한이 필요합니다.")
+                .setDeniedMessage("권한을 허용하지 않으면 카메라를 사용할 수 없습니다.")
+                .setPermissions(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION,
+                        Manifest.permission.INTERNET)
+                .check();
 
         YOLOv5.init(getAssets());
         resultImageView = findViewById(R.id.imageView);
@@ -325,7 +312,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         CameraX.unbindAll();
         super.onDestroy();
-        if(tts != null){
+        if (tts != null) {
             tts.stop();
             tts.shutdown();
             tts = null;
@@ -423,4 +410,90 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-}
+    public boolean checkLocationServicesStatus() {
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
+                locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+    }
+
+    private static final int GPS_ENABLE_REQUEST_CODE = 2001;
+    private static final int PERMISSIONS_REQUEST_CODE = 100;
+
+    void checkRunTimePermission() {
+        int hasFineLocationPermission = ContextCompat.checkSelfPermission(MainActivity.this,
+                Manifest.permission.ACCESS_FINE_LOCATION);
+        int hasCoarseLocationPermission = ContextCompat.checkSelfPermission(MainActivity.this,
+                Manifest.permission.ACCESS_COARSE_LOCATION);
+
+        if (hasFineLocationPermission == PackageManager.PERMISSION_GRANTED &&
+                hasCoarseLocationPermission == PackageManager.PERMISSION_GRANTED) {
+            // 2. 이미 퍼미션을 가지고 있음.
+        }
+    }
+
+        class HomeFragment extends Fragment {
+
+            private final int PERMISSIONS_ACCESS_FINE_LOCATION = 1000;
+            private final int PERMISSIONS_ACCESS_COARSE_LOCATION = 1001;
+            private boolean isAccessFineLocation = false;
+            private boolean isAccessCoarseLocation = false;
+            private boolean isPermission = false;
+            private TextView locationinfo;
+
+            private gps gps;
+
+            public HomeFragment() {
+
+                // Required empty public constructor
+
+            }
+
+            @Override
+            public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+                gps = new gps(getContext());
+                if (gps.isGetLocation()) {
+                    double latitude = gps.getLatitude();
+                    double longitude = gps.getLongitude();
+
+                    Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
+                    List<Address> addresses = null;
+
+                    try {
+                        addresses = geocoder.getFromLocation(latitude, longitude, 1);
+                        Address address = addresses.get(0);
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    if (addresses != null) {
+                        if (addresses.size() == 0) {
+
+                            locationinfo.setText("위치정보를 가져올 수 없습니다.");
+
+                        }
+
+                    }
+                    locationinfo.setText(addresses.get(0).getAddressLine(0));
+
+                }
+
+                return HomeFragment.super.onCreateView(inflater, container, savedInstanceState);
+            }
+
+            @Override
+            public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+                if (requestCode == PERMISSIONS_ACCESS_FINE_LOCATION && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    isAccessFineLocation = true;
+                } else if (requestCode == PERMISSIONS_ACCESS_COARSE_LOCATION && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    isAccessCoarseLocation = true;
+                }
+
+                if (isAccessFineLocation && isAccessCoarseLocation) {
+                    isPermission = true;
+                }
+
+            }
+
+        }
+    }
