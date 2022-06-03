@@ -13,6 +13,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.LifecycleOwner;
 
 import android.Manifest;
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -25,6 +26,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.YuvImage;
+import android.location.Address;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -42,6 +44,7 @@ import android.widget.Toast;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.location.Geocoder;
 
 import com.gun0912.tedpermission.TedPermission;
 import com.gun0912.tedpermission.PermissionListener;
@@ -50,6 +53,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -79,8 +83,8 @@ public class MainActivity extends AppCompatActivity {
     View view;
     GestureDetector gestureDetector;
 
-    double mLatitude; // 위도
-    double mLongitude; // 경도
+    double lat;
+    double lon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,23 +100,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        LocationManager locationManager = (LocationManager)
-                getSystemService(Context.LOCATION_SERVICE);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
+        Geocoder geocoder = new Geocoder(this);
+
+        List<Address> address = null;
+
+        try {
+            address = geocoder.getFromLocation(lat, lon, 1);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        Location loc_Current = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
-        mLatitude = loc_Current.getLatitude(); // 위도
-        mLongitude = loc_Current.getLongitude(); // 경도
-
+        if (address != null) {
+            if(address.size() != 0) {
+                String str_Addr = address.get(0).getAddressLine(0);
+                locationinfo.append(str_Addr);
+            }
+        }
 
         view = findViewById(R.id.view);
         view.setOnTouchListener(new View.OnTouchListener() {
@@ -132,8 +135,8 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onLongPress(MotionEvent e) {
-                // 위치 알려주기
-
+                tts.setSpeechRate(1.5f);
+                tts.speak(locationinfo.getText().toString(), TextToSpeech.QUEUE_FLUSH, null);
             }
         });
 
