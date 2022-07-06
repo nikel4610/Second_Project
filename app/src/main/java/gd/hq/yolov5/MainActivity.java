@@ -86,6 +86,8 @@ public class MainActivity extends AppCompatActivity {
     private int height;
     View view;
     GestureDetector gestureDetector;
+    private gps2 gpsTracker;
+    private gps1 gps1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,7 +103,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        locationinfo = findViewById(R.id.locationinfo);
+        locationinfo = (TextView) findViewById(R.id.locationinfo);
+        objectinfo = (TextView) findViewById(R.id.objectinfo);
+
+        gpsTracker = new gps2(this);
+        double latitude = gpsTracker.getLatitude();
+        double longitude = gpsTracker.getLongitude();
+
+        String address = gps1.getCurrentAddress(latitude, longitude);
+        locationinfo.setText(address);
 
         view = findViewById(R.id.view);
         view.setOnTouchListener(new View.OnTouchListener() {
@@ -125,8 +135,6 @@ public class MainActivity extends AppCompatActivity {
                 tts.speak(locationinfo.getText().toString(), TextToSpeech.QUEUE_FLUSH, null);
             }
         });
-
-        objectinfo = (TextView) findViewById(R.id.objectinfo);
 
         TedPermission.with(getApplicationContext())
                 .setPermissionListener(permissionListener)
@@ -440,45 +448,10 @@ public class MainActivity extends AppCompatActivity {
             private boolean isPermission = false;
             private TextView locationinfo;
 
-            private gps gps;
-
             public HomeFragment() {
 
                 // Required empty public constructor
 
-            }
-
-            @Override
-            public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-                gps = new gps(getContext());
-                if (gps.isGetLocation()) {
-                    double latitude = gps.getLatitude();
-                    double longitude = gps.getLongitude();
-
-                    Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
-                    List<Address> addresses = null;
-
-                    try {
-                        addresses = geocoder.getFromLocation(latitude, longitude, 1);
-                        Address address = addresses.get(0);
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                    if (addresses != null) {
-                        if (addresses.size() == 0) {
-
-                            locationinfo.setText("위치정보를 가져올 수 없습니다.");
-
-                        }
-
-                    }
-                    locationinfo.setText(addresses.get(0).getAddressLine(0));
-
-                }
-
-                return HomeFragment.super.onCreateView(inflater, container, savedInstanceState);
             }
 
             @Override
