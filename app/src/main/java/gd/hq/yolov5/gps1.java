@@ -34,6 +34,7 @@ import java.util.Locale;
 public class gps1 extends AppCompatActivity
 {
     private gps2 gpsTracker;
+    private TextView locationinfo;
 
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
     private static final int PERMISSIONS_REQUEST_CODE = 100;
@@ -175,8 +176,6 @@ public class gps1 extends AppCompatActivity
             return "잘못된 GPS 좌표";
 
         }
-
-
 
         if (addresses == null || addresses.size() == 0) {
             Toast.makeText(this, "주소 미발견", Toast.LENGTH_LONG).show();
