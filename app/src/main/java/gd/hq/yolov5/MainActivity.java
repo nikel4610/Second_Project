@@ -128,7 +128,8 @@ public class MainActivity extends AppCompatActivity {
                 gpsTracker = new gps2(MainActivity.this);
                 double latitude = gpsTracker.getLatitude();
                 double longitude = gpsTracker.getLongitude();
-                locationinfo.setText("" + "Latitude: " + latitude + " Longitude: " + longitude);
+
+                // locationinfo.setText("" + "Latitude: " + latitude + " Longitude: " + longitude);
 
                 tts.setSpeechRate(1.5f);
                 tts.speak(locationinfo.getText().toString(), TextToSpeech.QUEUE_FLUSH, null);
