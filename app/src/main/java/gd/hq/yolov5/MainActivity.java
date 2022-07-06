@@ -97,11 +97,6 @@ public class MainActivity extends AppCompatActivity {
         locationinfo = (TextView) findViewById(R.id.locationinfo);
         objectinfo = (TextView) findViewById(R.id.objectinfo);
 
-        gpsTracker = new gps2(this);
-        double latitude = gpsTracker.getLatitude();
-        double longitude = gpsTracker.getLongitude();
-        locationinfo.setText("" + "Latitude: " + latitude + " Longitude: " + longitude);
-
         tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
@@ -129,6 +124,12 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onLongPress(MotionEvent e) {
+
+                gpsTracker = new gps2(MainActivity.this);
+                double latitude = gpsTracker.getLatitude();
+                double longitude = gpsTracker.getLongitude();
+                locationinfo.setText("" + "Latitude: " + latitude + " Longitude: " + longitude);
+
                 tts.setSpeechRate(1.5f);
                 tts.speak(locationinfo.getText().toString(), TextToSpeech.QUEUE_FLUSH, null);
             }
