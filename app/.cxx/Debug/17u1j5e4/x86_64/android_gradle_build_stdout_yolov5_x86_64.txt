@@ -1,0 +1,1 @@
+ninja: Entering directory `C:\Users\user\AndroidStudioProjects\Android_NCNN_yolov4-tiny-master\app\.cxx\Debug\17u1j5e4\x86_64'
