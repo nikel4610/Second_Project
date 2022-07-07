@@ -1,5 +1,6 @@
 package gd.hq.yolov5;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.camera.core.CameraX;
@@ -15,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
 
 import android.Manifest;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -50,6 +52,12 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.Geocoder;
 
+import com.google.android.gms.location.Geofence;
+import com.google.android.gms.location.GeofencingClient;
+import com.google.android.gms.location.GeofencingRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.gun0912.tedpermission.TedPermission;
 import com.gun0912.tedpermission.PermissionListener;
 
@@ -88,7 +96,6 @@ public class MainActivity extends AppCompatActivity {
     GestureDetector gestureDetector;
     private gps2 gpsTracker;
     private gps1 gps1;
-
 
 
     @Override
