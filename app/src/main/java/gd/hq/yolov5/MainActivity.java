@@ -89,6 +89,8 @@ public class MainActivity extends AppCompatActivity {
     private gps2 gpsTracker;
     private gps1 gps1;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
