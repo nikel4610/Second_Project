@@ -96,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
     GestureDetector gestureDetector;
     private gps2 gpsTracker;
     private gps1 gps1;
+    private geofence geofence;
 
 
     @Override

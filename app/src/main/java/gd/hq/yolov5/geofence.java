@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -24,8 +25,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class geofence extends AppCompatActivity {
-    private final int MINIMUM_RECOMENDED_RADIUS = 100;
     private gps2 gpsTracker;
+    private TextView locationinfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +63,7 @@ public class geofence extends AppCompatActivity {
 
     private List createGeofenceList() {
         List<Geofence> geofenceList = new ArrayList<>();
+        int MINIMUM_RECOMENDED_RADIUS = 5;
         geofenceList.add(new Geofence.Builder()
                 .setRequestId("GeofenceLocation")
                 .setCircularRegion(
