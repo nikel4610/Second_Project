@@ -94,9 +94,6 @@ public class MainActivity extends AppCompatActivity {
     private int height;
     View view;
     GestureDetector gestureDetector;
-    private gps2 gpsTracker;
-    private gps1 gps1;
-    private geofence geofence;
 
 
     @Override
@@ -134,13 +131,6 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onLongPress(MotionEvent e) {
-
-                gpsTracker = new gps2(MainActivity.this);
-                double latitude = gpsTracker.getLatitude();
-                double longitude = gpsTracker.getLongitude();
-
-                locationinfo.setText("" + "Latitude: " + latitude + " Longitude: " + longitude);
-                // locationinfo.setText("" + "Latitude: " + latitude + " Longitude: " + longitude);
 
                 tts.setSpeechRate(1.5f);
                 tts.speak(locationinfo.getText().toString(), TextToSpeech.QUEUE_FLUSH, null);
