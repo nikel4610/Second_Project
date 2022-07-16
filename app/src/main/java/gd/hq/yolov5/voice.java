@@ -76,64 +76,65 @@ public class voice extends AppCompatActivity {
 
             }
         });
-        private RecognitionListener listener = new RecognitionListener() {
-            @Override
-            public void onReadyForSpeech(Bundle params) {
 
-            }
-
-            @Override
-            public void onBeginningOfSpeech() {
-                tts.speak("찾으시는 물건을 말씀해주세요.", TextToSpeech.QUEUE_FLUSH, null);
-
-            }
-
-            @Override
-            public void onRmsChanged(float rmsdB) {
-
-            }
-
-            @Override
-            public void onBufferReceived(byte[] buffer) {
-
-            }
-
-            @Override
-            public void onEndOfSpeech() {
-
-            }
-
-            @Override
-            public void onError(int error) {
-                // 에러 발생시 알림음 + tts로 에러 메시지 출력
-                tts.speak("오류가 발생했습니다.", TextToSpeech.QUEUE_FLUSH, null);
-
-            }
-
-            @Override
-            public void onResults(Bundle results) {
-                String key= "";
-                key = SpeechRecognizer.RESULTS_RECOGNITION;
-                ArrayList<String> mResult =results.getStringArrayList(key);
-                String[] rs = new String[mResult.size()];
-                mResult.toArray(rs);
-                locationinfo.setText(rs[0]+"\r\n"+locationinfo.getText());
-                FuncVoiceOrderCheck(rs[0]);
-                mRecognizer.startListening(SttIntent);
-
-            }
-
-            @Override
-            public void onPartialResults(Bundle partialResults) {
-
-            }
-
-            @Override
-            public void onEvent(int eventType, Bundle params) {
-
-            }
-        };
         }
+    private RecognitionListener listener = new RecognitionListener() {
+        @Override
+        public void onReadyForSpeech(Bundle params) {
+
+        }
+
+        @Override
+        public void onBeginningOfSpeech() {
+            tts.speak("찾으시는 물건을 말씀해주세요.", TextToSpeech.QUEUE_FLUSH, null);
+
+        }
+
+        @Override
+        public void onRmsChanged(float rmsdB) {
+
+        }
+
+        @Override
+        public void onBufferReceived(byte[] buffer) {
+
+        }
+
+        @Override
+        public void onEndOfSpeech() {
+
+        }
+
+        @Override
+        public void onError(int error) {
+            // 에러 발생시 알림음 + tts로 에러 메시지 출력
+            tts.speak("오류가 발생했습니다.", TextToSpeech.QUEUE_FLUSH, null);
+
+        }
+
+        @Override
+        public void onResults(Bundle results) {
+            String key= "";
+            key = SpeechRecognizer.RESULTS_RECOGNITION;
+            ArrayList<String> mResult =results.getStringArrayList(key);
+            String[] rs = new String[mResult.size()];
+            mResult.toArray(rs);
+            locationinfo.setText(rs[0]+"\r\n"+locationinfo.getText());
+            FuncVoiceOrderCheck(rs[0]);
+            mRecognizer.startListening(SttIntent);
+
+        }
+
+        @Override
+        public void onPartialResults(Bundle partialResults) {
+
+        }
+
+        @Override
+        public void onEvent(int eventType, Bundle params) {
+
+        }
+    };
 
 
     }
