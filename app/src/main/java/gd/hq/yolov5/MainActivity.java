@@ -83,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
     private TextureView viewFinder;
     private TextToSpeech tts;
     private TextView objectinfo;
-    private TextView locationinfo;
 
     private AtomicBoolean detecting = new AtomicBoolean(false);
     private AtomicBoolean detectPhoto = new AtomicBoolean(false);
@@ -101,7 +100,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        locationinfo = (TextView) findViewById(R.id.locationinfo);
         objectinfo = (TextView) findViewById(R.id.objectinfo);
 
         tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
@@ -127,13 +125,6 @@ public class MainActivity extends AppCompatActivity {
                 tts.setSpeechRate(1.5f);
                 tts.speak(objectinfo.getText().toString(), TextToSpeech.QUEUE_FLUSH, null);
                 return true;
-            }
-
-            @Override
-            public void onLongPress(MotionEvent e) {
-
-                tts.setSpeechRate(1.5f);
-                tts.speak(locationinfo.getText().toString(), TextToSpeech.QUEUE_FLUSH, null);
             }
         });
 
