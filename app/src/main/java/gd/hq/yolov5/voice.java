@@ -65,14 +65,15 @@ public class voice extends AppCompatActivity {
 
         gestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
             @Override
-            public void onLongPress(MotionEvent f) {
+            public void onShowPress(MotionEvent e) {
                 if(ContextCompat.checkSelfPermission(cThis, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(voice.this,new String[]{Manifest.permission.RECORD_AUDIO},1);
                 } else {
                     try {
                         mRecognizer.startListening(SttIntent);
-                    } catch (SecurityException e){e.printStackTrace();}
+                    } catch (SecurityException f){f.printStackTrace();}
                 }
+
 
             }
         });
@@ -114,15 +115,13 @@ public class voice extends AppCompatActivity {
 
         @Override
         public void onResults(Bundle results) {
-            String key= "";
-            key = SpeechRecognizer.RESULTS_RECOGNITION;
-            ArrayList<String> mResult =results.getStringArrayList(key);
-            String[] rs = new String[mResult.size()];
-            mResult.toArray(rs);
-            locationinfo.setText(rs[0]+"\r\n"+locationinfo.getText());
-            FuncVoiceOrderCheck(rs[0]);
-            mRecognizer.startListening(SttIntent);
+            ArrayList<String> matches =
+                    results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
 
+            for (int i = 0; i < matches.size(); i++) {
+                locationinfo.setText(matches.get(i));
+
+            }
         }
 
         @Override
@@ -136,7 +135,10 @@ public class voice extends AppCompatActivity {
         }
     };
 
+    private void FuncVoiceOrderCheck(String VoiceMsg){
+        if(VoiceMsg.length()<1)return;
 
+        VoiceMsg=VoiceMsg.replace(" ","");//공백제거
     }
 
 }
