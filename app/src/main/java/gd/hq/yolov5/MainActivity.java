@@ -34,6 +34,7 @@ import android.location.Address;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.provider.MediaStore;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
@@ -115,8 +116,9 @@ public class MainActivity extends AppCompatActivity {
         view.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                Toast.makeText(getApplicationContext(),"터치이벤트",Toast.LENGTH_SHORT).show();
                 gestureDetector.onTouchEvent(event);
-                return true;
+                return false;
             }
         });
         gestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
@@ -124,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
             public boolean onSingleTapUp(MotionEvent e) {
                 tts.setSpeechRate(1.5f);
                 tts.speak(objectinfo.getText().toString(), TextToSpeech.QUEUE_FLUSH, null);
-                return true;
+                return false;
             }
         });
 

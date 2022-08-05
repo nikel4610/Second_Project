@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 import android.speech.tts.TextToSpeech;
@@ -13,6 +14,7 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -54,18 +56,14 @@ public class voice extends AppCompatActivity {
             }
         });
 
-        view = findViewById(R.id.view);
-        view.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                gestureDetector.onTouchEvent(event);
-                return true;
-            }
-        });
 
-        gestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
+        view = findViewById(R.id.view);
+        view.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public void onShowPress(MotionEvent e) {
+            public boolean onLongClick(View v) {
+                Vibrator vib = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+                vib.vibrate(100);
+                Toast.makeText(getApplicationContext(),"롱터치이벤트",Toast.LENGTH_SHORT).show();
                 if(ContextCompat.checkSelfPermission(cThis, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(voice.this,new String[]{Manifest.permission.RECORD_AUDIO},1);
                 } else {
@@ -73,8 +71,7 @@ public class voice extends AppCompatActivity {
                         mRecognizer.startListening(SttIntent);
                     } catch (SecurityException f){f.printStackTrace();}
                 }
-
-
+                return false;
             }
         });
 
@@ -82,11 +79,13 @@ public class voice extends AppCompatActivity {
     private RecognitionListener listener = new RecognitionListener() {
         @Override
         public void onReadyForSpeech(Bundle params) {
-
+            Vibrator vib = (Vibrator)getSystemService(VIBRATOR_SERVICE);
+            vib.vibrate(500);
         }
 
         @Override
         public void onBeginningOfSpeech() {
+            tts.setSpeechRate(1.5f);
             tts.speak("찾으시는 물건을 말씀해주세요.", TextToSpeech.QUEUE_FLUSH, null);
 
         }
@@ -109,6 +108,7 @@ public class voice extends AppCompatActivity {
         @Override
         public void onError(int error) {
             // 에러 발생시 알림음 + tts로 에러 메시지 출력
+            tts.setSpeechRate(1.5f);
             tts.speak("오류가 발생했습니다.", TextToSpeech.QUEUE_FLUSH, null);
 
         }
@@ -139,6 +139,31 @@ public class voice extends AppCompatActivity {
         if(VoiceMsg.length()<1)return;
 
         VoiceMsg=VoiceMsg.replace(" ","");//공백제거
-    }
 
+        if(locationinfo.getText().toString().equals(VoiceMsg)){
+            tts.setSpeechRate(1.5f);
+            tts.speak("찾으시는 물건을 찾았습니다.", TextToSpeech.QUEUE_FLUSH, null);
+            Vibrator vib = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+            vib.vibrate(100);
+        }
+        else{
+            tts.setSpeechRate(1.5f);
+            tts.speak("찾으시는 물건을 찾지 못했습니다.", TextToSpeech.QUEUE_FLUSH, null);
+        }
+
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(tts != null){
+            tts.stop();
+            tts.shutdown();
+            tts = null;
+        }
+        if(mRecognizer != null){
+            mRecognizer.destroy();
+            mRecognizer.cancel();
+            mRecognizer = null;
+        }
+    }
 }
