@@ -121,6 +121,16 @@ public class MainActivity extends AppCompatActivity {
                 tts.speak(objectinfo.getText().toString(), TextToSpeech.QUEUE_FLUSH, null);
             }
         });
+        view.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                // Toast.makeText(getApplicationContext(),"롱터치이벤트",Toast.LENGTH_SHORT).show();
+                // 여기에 voice 우겨넣기
+                Vibrator vib = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+                vib.vibrate(500);
+                return true;
+            }
+        });
 
         TedPermission.with(getApplicationContext())
                 .setPermissionListener(permissionListener)

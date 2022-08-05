@@ -61,9 +61,9 @@ public class voice extends AppCompatActivity {
         view.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                Vibrator vib = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-                vib.vibrate(100);
-                Toast.makeText(getApplicationContext(),"롱터치이벤트",Toast.LENGTH_SHORT).show();
+                // Vibrator vib = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+                // vib.vibrate(100);
+                // Toast.makeText(getApplicationContext(),"롱터치이벤트",Toast.LENGTH_SHORT).show();
                 if(ContextCompat.checkSelfPermission(cThis, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(voice.this,new String[]{Manifest.permission.RECORD_AUDIO},1);
                 } else {
