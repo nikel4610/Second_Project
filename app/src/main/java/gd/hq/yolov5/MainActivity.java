@@ -113,30 +113,14 @@ public class MainActivity extends AppCompatActivity {
         });
 
         view = findViewById(R.id.view);
-        view.setOnTouchListener(new View.OnTouchListener() {
+        view.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                Toast.makeText(getApplicationContext(),"터치이벤트",Toast.LENGTH_SHORT).show();
-                gestureDetector.onTouchEvent(event);
-                return false;
-            }
-        });
-        gestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
-            @Override
-            public boolean onSingleTapUp(MotionEvent e) {
+            public void onClick(View v) {
+                // Toast.makeText(getApplicationContext(),"터치이벤트",Toast.LENGTH_SHORT).show();
                 tts.setSpeechRate(1.5f);
                 tts.speak(objectinfo.getText().toString(), TextToSpeech.QUEUE_FLUSH, null);
-                return true;
             }
         });
-
-        view.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                Toast.makeText(getApplicationContext(),"롱터치이벤트",Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        }); // 왜 터치만 되는지 모르겠다
 
         TedPermission.with(getApplicationContext())
                 .setPermissionListener(permissionListener)

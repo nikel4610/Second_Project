@@ -71,7 +71,7 @@ public class voice extends AppCompatActivity {
                         mRecognizer.startListening(SttIntent);
                     } catch (SecurityException f){f.printStackTrace();}
                 }
-                return false;
+                return true;
             }
         });
 
