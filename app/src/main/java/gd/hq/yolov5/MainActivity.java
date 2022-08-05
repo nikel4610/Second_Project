@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),"롱터치이벤트",Toast.LENGTH_SHORT).show();
                 return false;
             }
-        });
+        }); // 왜 터치만 되는지 모르겠다
 
         TedPermission.with(getApplicationContext())
                 .setPermissionListener(permissionListener)
