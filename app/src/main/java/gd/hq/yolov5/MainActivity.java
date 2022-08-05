@@ -126,6 +126,14 @@ public class MainActivity extends AppCompatActivity {
             public boolean onSingleTapUp(MotionEvent e) {
                 tts.setSpeechRate(1.5f);
                 tts.speak(objectinfo.getText().toString(), TextToSpeech.QUEUE_FLUSH, null);
+                return true;
+            }
+        });
+
+        view.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(getApplicationContext(),"롱터치이벤트",Toast.LENGTH_SHORT).show();
                 return false;
             }
         });
