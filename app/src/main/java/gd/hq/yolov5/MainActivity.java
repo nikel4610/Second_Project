@@ -142,12 +142,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onLongClick(View v) {
                 // Toast.makeText(getApplicationContext(),"롱터치이벤트",Toast.LENGTH_SHORT).show();
-                // ? 여기
                 Vibrator vib = (Vibrator) getSystemService(VIBRATOR_SERVICE);
                 vib.vibrate(500);
-
-//                tts.setSpeechRate(1.5f);
-//                tts.speak("찾으시는 물건을 말씀해주세요.", TextToSpeech.QUEUE_FLUSH, null);
 
                 if(ContextCompat.checkSelfPermission(cThis, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(MainActivity.this,new String[]{Manifest.permission.RECORD_AUDIO},1);
@@ -211,6 +207,8 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onBeginningOfSpeech() {
             System.out.println("onBeginningOfSpeech.........................");
+            tts.setSpeechRate(1.5f);
+            tts.speak("찾으시는 물건을 말씀해주세요.", TextToSpeech.QUEUE_FLUSH, null);
         }
 
         @Override
@@ -231,15 +229,39 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onError(int error) {
             // 에러 발생시 알림음 + tts로 에러 메시지 출력
-            tts.setSpeechRate(1.5f);
-            tts.speak("오류가 발생했습니다.", TextToSpeech.QUEUE_FLUSH, null);
+//            tts.setSpeechRate(1.5f);
+//            tts.speak("오류가 발생했습니다.", TextToSpeech.QUEUE_FLUSH, null);
             System.out.println("onError.........................");
 
+            String message;
+
+            if (error == SpeechRecognizer.ERROR_AUDIO) {
+                message = "오디오 에러";
+            } else if (error == SpeechRecognizer.ERROR_CLIENT) {
+                message = "클라이언트 에러";
+            } else if (error == SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS) {
+                message = "퍼미션 없음";
+            } else if (error == SpeechRecognizer.ERROR_NETWORK) {
+                message = "네트워크 에러";
+            } else if (error == SpeechRecognizer.ERROR_NETWORK_TIMEOUT) {
+                message = "네트웍 타임아웃";
+            } else if (error == SpeechRecognizer.ERROR_NO_MATCH) {
+                message = "찾을 수 없음";
+            } else if (error == SpeechRecognizer.ERROR_RECOGNIZER_BUSY) {
+                message = "RECOGNIZER가 바쁨";
+            } else if (error == SpeechRecognizer.ERROR_SERVER) {
+                message = "서버가 이상함";
+            } else if (error == SpeechRecognizer.ERROR_SPEECH_TIMEOUT) {
+                message = "말하는 시간초과";
+            } else {
+                message = "알 수 없는 오류임";
+            }
+            Toast.makeText(getApplicationContext(), "에러가 발생하였습니다. : " + message,Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onResults(Bundle results) {
-            // ? 여기
+            // ? 여기 위에 넣어야 하나?
 //            ArrayList<String> matches =
 //                    results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
 //
@@ -266,21 +288,21 @@ public class MainActivity extends AppCompatActivity {
     };
 
     private void FuncVoiceOrderCheck(String VoiceMsg){
-        // ? 여기
-//        if(VoiceMsg.length()<1)return;
-//
-//        VoiceMsg=VoiceMsg.replace(" ","");//공백제거
-//
-//        if(locationinfo.getText().toString().equals(VoiceMsg)){
-//            tts.setSpeechRate(1.5f);
-//            tts.speak("찾으시는 물건을 찾았습니다.", TextToSpeech.QUEUE_FLUSH, null);
-//            Vibrator vib = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-//            vib.vibrate(100);
-//        }
-//        else{
-//            tts.setSpeechRate(1.5f);
-//            tts.speak("찾으시는 물건을 찾지 못했습니다.", TextToSpeech.QUEUE_FLUSH, null);
-//        }
+        // ? 여기 위에 넣어야 하나?
+        if(VoiceMsg.length()<1)return;
+
+        VoiceMsg=VoiceMsg.replace(" ","");//공백제거
+
+        if(locationinfo.getText().toString().equals(VoiceMsg)){
+            tts.setSpeechRate(1.5f);
+            tts.speak("찾으시는 물건을 찾았습니다.", TextToSpeech.QUEUE_FLUSH, null);
+            Vibrator vib = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+            vib.vibrate(100);
+        }
+        else{
+            tts.setSpeechRate(1.5f);
+            tts.speak("찾으시는 물건을 찾지 못했습니다.", TextToSpeech.QUEUE_FLUSH, null);
+        }
 
     }
 
