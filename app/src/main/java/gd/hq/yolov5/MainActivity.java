@@ -18,6 +18,7 @@ import androidx.lifecycle.LifecycleOwner;
 import android.Manifest;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.app.VoiceInteractor;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -71,6 +72,7 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class MainActivity extends AppCompatActivity {
@@ -127,6 +129,7 @@ public class MainActivity extends AppCompatActivity {
         i.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "ko-KR");
         mRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
         mRecognizer.setRecognitionListener(listener);
+        // mRecognizer.startListening(i);
 
 
         view = findViewById(R.id.view);
@@ -207,8 +210,8 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onBeginningOfSpeech() {
             System.out.println("onBeginningOfSpeech.........................");
-            tts.setSpeechRate(1.5f);
-            tts.speak("찾으시는 물건을 말씀해주세요.", TextToSpeech.QUEUE_FLUSH, null);
+//            tts.setSpeechRate(1.5f);
+//            tts.speak("찾으시는 물건을 말씀해주세요.", TextToSpeech.QUEUE_FLUSH, null);
         }
 
         @Override
@@ -261,19 +264,12 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onResults(Bundle results) {
-            // ? 여기 위에 넣어야 하나?
-//            ArrayList<String> matches =
-//                    results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
-//
-//            for (int i = 0; i < matches.size(); i++) {
-//                locationinfo.setText(matches.get(i));
-
             String key = "";
             key = SpeechRecognizer.RESULTS_RECOGNITION;
             ArrayList<String> mResult = results.getStringArrayList(key);
             String[] rs = new String[mResult.size()];
             mResult.toArray(rs);
-            locationinfo.setText(rs[0]);
+            FuncVoiceOrderCheck(rs[0]);
         }
 
         @Override
@@ -287,21 +283,22 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    private void FuncVoiceOrderCheck(String VoiceMsg){
-        // ? 여기 위에 넣어야 하나?
+    private void FuncVoiceOrderCheck(String VoiceMsg) {
+        locationinfo = (TextView) findViewById(R.id.locationinfo);
+
         if(VoiceMsg.length()<1)return;
 
         VoiceMsg=VoiceMsg.replace(" ","");//공백제거
+        locationinfo.setText(VoiceMsg);
 
-        if(locationinfo.getText().toString().equals(VoiceMsg)){
+        // locationinfo의 텍스트가 objectinfo에 포함되면 음성 출력
+        if(objectinfo.getText().toString().contains(locationinfo.getText().toString())){
             tts.setSpeechRate(1.5f);
-            tts.speak("찾으시는 물건을 찾았습니다.", TextToSpeech.QUEUE_FLUSH, null);
-            Vibrator vib = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-            vib.vibrate(100);
+            tts.speak("물건이 전방에 있습니다", TextToSpeech.QUEUE_FLUSH, null);
         }
         else{
             tts.setSpeechRate(1.5f);
-            tts.speak("찾으시는 물건을 찾지 못했습니다.", TextToSpeech.QUEUE_FLUSH, null);
+            tts.speak("물건이 없습니다", TextToSpeech.QUEUE_FLUSH, null);
         }
 
     }

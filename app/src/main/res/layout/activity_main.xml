@@ -11,9 +11,10 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="14dp"
+        android:layout_marginBottom="42dp"
         android:background="#A3CCA3"
         android:src="#A3CCA3"
-        app:layout_constraintBottom_toTopOf="@+id/tv_info"
+        app:layout_constraintBottom_toTopOf="@+id/locationinfo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -39,8 +40,8 @@
 
     <TextView
         android:id="@+id/tv_info"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="406dp"
+        android:layout_height="23dp"
         android:layout_marginBottom="20dp"
         android:paddingLeft="5dp"
         android:paddingTop="2dp"
@@ -53,25 +54,27 @@
         android:id="@+id/objectinfo"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
         android:gravity="fill_vertical"
         android:paddingLeft="5dp"
         android:paddingTop="2dp"
         app:layout_constraintBottom_toTopOf="@+id/locationinfo"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/locationinfo"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="28dp"
+        android:layout_width="416dp"
+        android:layout_height="25dp"
+        android:layout_marginBottom="21dp"
         android:gravity="fill_vertical"
         android:paddingLeft="5dp"
         android:paddingTop="2dp"
-        app:layout_constraintBottom_toTopOf="@+id/valTxtView"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_info" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <View
         android:id="@+id/view"
@@ -81,5 +84,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
