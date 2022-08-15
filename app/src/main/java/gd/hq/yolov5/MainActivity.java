@@ -34,7 +34,10 @@ import android.graphics.YuvImage;
 import android.location.Address;
 import android.media.ExifInterface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.Vibrator;
 import android.provider.MediaStore;
 import android.speech.RecognitionListener;
@@ -73,6 +76,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class MainActivity extends AppCompatActivity {
@@ -131,7 +136,6 @@ public class MainActivity extends AppCompatActivity {
         mRecognizer.setRecognitionListener(listener);
         // mRecognizer.startListening(i);
 
-
         view = findViewById(R.id.view);
         view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -159,6 +163,15 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+//        locationinfo = (TextView) findViewById(R.id.locationinfo);
+//        objectinfo = (TextView) findViewById(R.id.objectinfo);
+//
+//        if (objectinfo.getText().toString().contains(locationinfo.getText().toString())) {
+//            tts.setSpeechRate(1.5f);
+//            tts.speak("물건을 찾았습니다", TextToSpeech.QUEUE_FLUSH, null);
+//            locationinfo.setText("");
+//        }
 
         TedPermission.with(getApplicationContext())
                 .setPermissionListener(permissionListener)
@@ -249,6 +262,7 @@ public class MainActivity extends AppCompatActivity {
             } else if (error == SpeechRecognizer.ERROR_NETWORK_TIMEOUT) {
                 message = "네트웍 타임아웃";
             } else if (error == SpeechRecognizer.ERROR_NO_MATCH) {
+                message = "찾을 수 없음";
                 tts.setSpeechRate(1.5f);
                 tts.speak("다시 말씀해주세요", TextToSpeech.QUEUE_FLUSH, null);
             } else if (error == SpeechRecognizer.ERROR_RECOGNIZER_BUSY) {
@@ -292,16 +306,21 @@ public class MainActivity extends AppCompatActivity {
         VoiceMsg=VoiceMsg.replace(" ","");//공백제거
         locationinfo.setText(VoiceMsg); // 말한 문장을 텍스트뷰에 출력
 
-        if (locationinfo.length() > 0) {
-            if(objectinfo.getText().toString().contains(locationinfo.getText().toString())){
-                tts.setSpeechRate(1.5f);
-                tts.speak("물건을 찾았습니다", TextToSpeech.QUEUE_FLUSH, null);
-                locationinfo.setText("");
+        Timer timer = new Timer();
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                if (locationinfo.length() > 0) {
+                    if(objectinfo.getText().toString().contains(locationinfo.getText().toString())){
+                        tts.setSpeechRate(1.5f);
+                        tts.speak("물건을 찾았습니다", TextToSpeech.QUEUE_FLUSH, null);
+                        locationinfo.setText("");
+                    }
+                }
             }
-            else{
-                // loop?
-            }
-        }
+        };
+        timer.schedule(timerTask, 0, 1000);
+        // 일정 시간 지나면 종료 추가하기
     }
 
     private void updateTransform() {
