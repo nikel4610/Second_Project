@@ -249,7 +249,8 @@ public class MainActivity extends AppCompatActivity {
             } else if (error == SpeechRecognizer.ERROR_NETWORK_TIMEOUT) {
                 message = "네트웍 타임아웃";
             } else if (error == SpeechRecognizer.ERROR_NO_MATCH) {
-                message = "찾을 수 없음";
+                tts.setSpeechRate(1.5f);
+                tts.speak("다시 말씀해주세요", TextToSpeech.QUEUE_FLUSH, null);
             } else if (error == SpeechRecognizer.ERROR_RECOGNIZER_BUSY) {
                 message = "RECOGNIZER가 바쁨";
             } else if (error == SpeechRecognizer.ERROR_SERVER) {
@@ -289,18 +290,18 @@ public class MainActivity extends AppCompatActivity {
         if(VoiceMsg.length()<1)return;
 
         VoiceMsg=VoiceMsg.replace(" ","");//공백제거
-        locationinfo.setText(VoiceMsg);
+        locationinfo.setText(VoiceMsg); // 말한 문장을 텍스트뷰에 출력
 
-        // locationinfo의 텍스트가 objectinfo에 포함되면 음성 출력
-        if(objectinfo.getText().toString().contains(locationinfo.getText().toString())){
-            tts.setSpeechRate(1.5f);
-            tts.speak("물건이 전방에 있습니다", TextToSpeech.QUEUE_FLUSH, null);
+        if (locationinfo.length() > 0) {
+            if(objectinfo.getText().toString().contains(locationinfo.getText().toString())){
+                tts.setSpeechRate(1.5f);
+                tts.speak("물건을 찾았습니다", TextToSpeech.QUEUE_FLUSH, null);
+                locationinfo.setText("");
+            }
+            else{
+                // loop?
+            }
         }
-        else{
-            tts.setSpeechRate(1.5f);
-            tts.speak("물건이 없습니다", TextToSpeech.QUEUE_FLUSH, null);
-        }
-
     }
 
     private void updateTransform() {
