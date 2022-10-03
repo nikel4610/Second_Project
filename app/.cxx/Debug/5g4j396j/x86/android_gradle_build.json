@@ -1,0 +1,40 @@
+{
+  "stringTable": {},
+  "buildFiles": [
+    "C:\\Users\\user\\AndroidStudioProjects\\Android_NCNN_yolov4-tiny-master\\app\\src\\main\\cpp\\CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "C:\\Users\\user\\AppData\\Local\\Android\\Sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe",
+      "-C",
+      "C:\\Users\\user\\AndroidStudioProjects\\Android_NCNN_yolov4-tiny-master\\app\\.cxx\\Debug\\5g4j396j\\x86",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "C:\\Users\\user\\AppData\\Local\\Android\\Sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe",
+    "-C",
+    "C:\\Users\\user\\AndroidStudioProjects\\Android_NCNN_yolov4-tiny-master\\app\\.cxx\\Debug\\5g4j396j\\x86",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {
+    "yolov5-Debug-x86": {
+      "buildCommandComponents": [
+        "C:\\Users\\user\\AppData\\Local\\Android\\Sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe",
+        "-C",
+        "C:\\Users\\user\\AndroidStudioProjects\\Android_NCNN_yolov4-tiny-master\\app\\.cxx\\Debug\\5g4j396j\\x86",
+        "yolov5"
+      ],
+      "buildType": "debug",
+      "abi": "x86",
+      "artifactName": "yolov5",
+      "output": "C:\\Users\\user\\AndroidStudioProjects\\Android_NCNN_yolov4-tiny-master\\app\\build\\intermediates\\cxx\\Debug\\5g4j396j\\obj\\x86\\libyolov5.so",
+      "runtimeFiles": []
+    }
+  },
+  "toolchains": {},
+  "cFileExtensions": [],
+  "cppFileExtensions": [
+    "cpp"
+  ]
+}
