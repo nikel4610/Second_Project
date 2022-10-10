@@ -69,6 +69,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.gun0912.tedpermission.TedPermission;
 import com.gun0912.tedpermission.PermissionListener;
 
+import org.jsoup.internal.StringUtil;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -425,7 +427,18 @@ public class MainActivity extends AppCompatActivity {
                             if (result.length > 0) {
                                 StringBuilder sb = new StringBuilder();
                                 for (Box box : result) {
-                                    sb.append(box.getLabel()).append(" ").append(box.getConfidence());
+                                    // 중복이 되지 않도록 처리
+                                    if (!sb.toString().contains(box.getLabel())) {
+                                        // 같은 물건 정보가 여러개 있는 경우 개수 알려주기
+                                        int count = 0;
+                                        for (Box box2 : result) {
+                                            if (box.getLabel().equals(box2.getLabel())) {
+                                                count++;
+                                            }
+                                        }
+                                        sb.append(box.getLabel()).append(" ");
+                                        sb.append(count).append("개 ");
+                                    }
                                 }
                                 objectinfo.setText(sb.toString());
                             }
