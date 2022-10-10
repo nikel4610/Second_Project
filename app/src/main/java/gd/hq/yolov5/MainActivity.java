@@ -66,6 +66,7 @@ import com.google.android.gms.location.GeofencingRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.annotations.NotNull;
 import com.gun0912.tedpermission.TedPermission;
 import com.gun0912.tedpermission.PermissionListener;
 
@@ -85,10 +86,15 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
     private static final int REQUEST_PICK_IMAGE = 2;
-    private static String[] PERMISSIONS_STORAGE = {
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
-    };
+//    private static String[] PERMISSIONS_STORAGE = {
+//            Manifest.permission.READ_EXTERNAL_STORAGE,
+//            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+//            Manifest.permission.CAMERA,
+//            Manifest.permission.ACCESS_FINE_LOCATION,
+//            Manifest.permission.ACCESS_COARSE_LOCATION,
+//            Manifest.permission.INTERNET,
+//            Manifest.permission.RECORD_AUDIO
+//    };
     private ImageView resultImageView;
     private TextView thresholdTextview;
     private TextView tvInfo;
@@ -105,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
     private int width;
     private int height;
     private TextView locationinfo;
+    private Permissions permission;
     View view;
     GestureDetector gestureDetector;
     Context cThis;
@@ -117,6 +124,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        permissionCheck();
 
         cThis = this;
 
@@ -166,24 +175,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        locationinfo = (TextView) findViewById(R.id.locationinfo);
-//        objectinfo = (TextView) findViewById(R.id.objectinfo);
-//
-//        if (objectinfo.getText().toString().contains(locationinfo.getText().toString())) {
-//            tts.setSpeechRate(1.5f);
-//            tts.speak("물건을 찾았습니다", TextToSpeech.QUEUE_FLUSH, null);
-//            locationinfo.setText("");
-//        }
-
-        TedPermission.with(getApplicationContext())
-                .setPermissionListener(permissionListener)
-                .setRationaleMessage("카메라 권한이 필요합니다.")
-                .setDeniedMessage("권한을 허용하지 않으면 카메라를 사용할 수 없습니다.")
-                .setPermissions(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION,
-                        Manifest.permission.INTERNET)
-                .check();
-
         YOLOv5.init(getAssets());
         resultImageView = findViewById(R.id.imageView);
         thresholdTextview = findViewById(R.id.valTxtView);
@@ -212,6 +203,24 @@ public class MainActivity extends AppCompatActivity {
                 startCamera();
             }
         });
+    }
+
+    private void permissionCheck() {
+        permission = new Permissions(this, this);
+
+        if(!permission.checkPermission()) {
+            permission.requestPermission();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull @NotNull String[] permissions, @NonNull @NotNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        // 리턴이 false일 경우 다시 권한 요청
+        if (!permission.permissionResult(requestCode, permissions, grantResults)){
+            permission.requestPermission();
+        }
     }
 
     private RecognitionListener listener = new RecognitionListener() {
