@@ -1,0 +1,4 @@
+# ninja log v5
+0	864	687104818	CMakeFiles/yolov5.dir/jni_interface.cpp.o	9a66c3c9ca86bf55
+2	959	687104818	CMakeFiles/yolov5.dir/YoloV5.cpp.o	41a1b71f3d2c2b18
+959	1197	687104818	C:/Users/user/AndroidStudioProjects/Android_NCNN_yolov4-tiny-master/app/build/intermediates/cxx/Debug/5g4j396j/obj/arm64-v8a/libyolov5.so	37bc7aebe1876f27
