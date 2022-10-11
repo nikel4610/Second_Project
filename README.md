@@ -30,7 +30,7 @@
   
 ToDos  
 1. 어플 디자인 찾아보고 계속 알려주기  
-2. 찾은 물건 거리 알려주기 + yolo box 오른쪽 왼쪽 위치 알려주기  
+~~2. yolo box 오른쪽 왼쪽 위치 알려주기~~ 해결
 3. 바코드 찍어서 제품 알려주기
 
 # Yolov4-tiny NCNN Implementation
