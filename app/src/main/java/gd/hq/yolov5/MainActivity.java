@@ -16,9 +16,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
 
 import android.Manifest;
-import android.app.PendingIntent;
-import android.app.Service;
-import android.app.VoiceInteractor;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -31,23 +28,17 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.YuvImage;
-import android.location.Address;
 import android.media.ExifInterface;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.os.Vibrator;
 import android.provider.MediaStore;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 import android.speech.tts.TextToSpeech;
-import android.util.Log;
 import android.util.Size;
 import android.view.GestureDetector;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.TextureView;
 import android.view.View;
@@ -55,30 +46,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
-import android.location.Geocoder;
 
-import com.google.android.gms.location.Geofence;
-import com.google.android.gms.location.GeofencingClient;
-import com.google.android.gms.location.GeofencingRequest;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.annotations.NotNull;
-import com.gun0912.tedpermission.TedPermission;
 import com.gun0912.tedpermission.PermissionListener;
-
-import org.jsoup.internal.StringUtil;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -322,11 +299,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 if (locationinfo.length() > 0) {
-                    if(objectinfo.getText().toString().contains(locationinfo.getText().toString())){
-                        tts.setSpeechRate(1.5f);
-                        tts.speak("물건을 찾았습니다", TextToSpeech.QUEUE_FLUSH, null);
-                        locationinfo.setText("");
-                    }
+                    objectinfo.getText().toString();
+                    locationinfo.getText().toString();
+                    // tts.setSpeechRate(1.5f);
+                    // tts.speak("물건을 찾았습니다", TextToSpeech.QUEUE_FLUSH, null);
+                    // locationinfo.setText("");
                 }
             }
         };
@@ -420,6 +397,26 @@ public class MainActivity extends AppCompatActivity {
                         canvas.drawText(box.getLabel(), box.x0 + 3, box.y0 + 40 * mutableBitmap.getWidth() / 1000, boxPaint);
                         boxPaint.setStyle(Paint.Style.STROKE);
                         canvas.drawRect(box.getRect(), boxPaint);
+                        // locationinfo의 중심점 좌표 구하기
+                        locationinfo = (TextView) findViewById(R.id.locationinfo);
+                        if (locationinfo.length() > 0) {
+                            if (box.getLabel().contains(locationinfo.getText().toString())) {
+                                float x = (box.x0 + box.x1) / 2;
+                                float y = (box.y0 + box.y1) / 2;
+                                // x축이 view의 200dp 이하에 있으면 왼쪽에 있다고 말하기
+                                if (x < 200) {
+                                    tts.setSpeechRate(1.5f);
+                                    tts.speak("전방에서 왼쪽부근에 있습니다", TextToSpeech.QUEUE_FLUSH, null);
+                                    locationinfo.setText("");
+                                }
+                                // x축이 view의 200dp 이상 400dp 이하에 있으면 가운데에 있다고 말하기
+                                else if (x >= 200) {
+                                    tts.setSpeechRate(1.5f);
+                                    tts.speak("전방에서 오른쪽부근에 있습니다", TextToSpeech.QUEUE_FLUSH, null);
+                                    locationinfo.setText("");
+                                }
+                            }
+                        }
                     }
                     runOnUiThread(new Runnable() {
                         @Override
@@ -484,7 +481,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-
 
     @Override
     protected void onDestroy() {
@@ -571,7 +567,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             returnBm = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(),
                     bm.getHeight(), matrix, true);
-        } catch (OutOfMemoryError e) {
+        } catch (OutOfMemoryError ignored) {
         }
         if (returnBm == null) {
             returnBm = bm;
