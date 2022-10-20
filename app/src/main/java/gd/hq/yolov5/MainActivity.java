@@ -39,10 +39,10 @@ import android.speech.SpeechRecognizer;
 import android.speech.tts.TextToSpeech;
 import android.util.Size;
 import android.view.GestureDetector;
-import android.view.MotionEvent;
 import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -63,15 +63,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
     private static final int REQUEST_PICK_IMAGE = 2;
-//    private static String[] PERMISSIONS_STORAGE = {
-//            Manifest.permission.READ_EXTERNAL_STORAGE,
-//            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-//            Manifest.permission.CAMERA,
-//            Manifest.permission.ACCESS_FINE_LOCATION,
-//            Manifest.permission.ACCESS_COARSE_LOCATION,
-//            Manifest.permission.INTERNET,
-//            Manifest.permission.RECORD_AUDIO
-//    };
     private ImageView resultImageView;
     private TextView thresholdTextview;
     private TextView tvInfo;
@@ -95,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
     SpeechRecognizer mRecognizer;
     Intent SttIntent;
     Intent i;
+    Button btnBarcode;
 
 
     @Override
@@ -151,7 +143,6 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-
         YOLOv5.init(getAssets());
         resultImageView = findViewById(R.id.imageView);
         thresholdTextview = findViewById(R.id.valTxtView);
@@ -180,6 +171,10 @@ public class MainActivity extends AppCompatActivity {
                 startCamera();
             }
         });
+    }
+
+    public void clickBtn(View v) {
+        Barcode Barcode = new Barcode();
     }
 
     private void permissionCheck() {
