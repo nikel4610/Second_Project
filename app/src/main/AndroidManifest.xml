@@ -21,7 +21,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".Barcode"
+            android:name=".Barcode_activity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -49,6 +49,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".CustomScannerActivity"></activity>
 
         <provider
             android:name="androidx.core.content.FileProvider"

@@ -31,6 +31,7 @@ import android.graphics.YuvImage;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Vibrator;
 import android.provider.MediaStore;
 import android.speech.RecognitionListener;
@@ -39,6 +40,7 @@ import android.speech.SpeechRecognizer;
 import android.speech.tts.TextToSpeech;
 import android.util.Size;
 import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -86,7 +88,8 @@ public class MainActivity extends AppCompatActivity {
     SpeechRecognizer mRecognizer;
     Intent SttIntent;
     Intent i;
-    Button btnBarcode;
+    private Button btnbarcode;
+    private boolean _isBtnDown;
 
 
     @Override
@@ -116,6 +119,15 @@ public class MainActivity extends AppCompatActivity {
         mRecognizer.setRecognitionListener(listener);
         // mRecognizer.startListening(i);
 
+        btnbarcode = (Button) findViewById(R.id.btnbarcode);
+        // btnbarcode를 누르면 바코드 인식 화면으로 이동
+        btnbarcode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Barcode_activity.class);
+                startActivity(intent);
+            }
+        });
         view = findViewById(R.id.view);
         view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -171,10 +183,6 @@ public class MainActivity extends AppCompatActivity {
                 startCamera();
             }
         });
-    }
-
-    public void clickBtn(View v) {
-        Barcode Barcode = new Barcode();
     }
 
     private void permissionCheck() {
