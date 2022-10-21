@@ -120,7 +120,6 @@ public class MainActivity extends AppCompatActivity {
         // mRecognizer.startListening(i);
 
         btnbarcode = (Button) findViewById(R.id.btnbarcode);
-        // btnbarcode를 누르면 바코드 인식 화면으로 이동
         btnbarcode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
         view = findViewById(R.id.view);
         view.setOnClickListener(new View.OnClickListener() {
             @Override

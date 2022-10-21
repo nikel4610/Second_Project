@@ -1,0 +1,13 @@
+[
+{
+  "directory": "C:/Users/user/AndroidStudioProjects/Android_NCNN_yolov4-tiny-master/app/.cxx/Debug/f192v135/x86",
+  "command": "C:\\Users\\user\\AppData\\Local\\Android\\Sdk\\ndk\\23.1.7779620\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\clang++.exe --target=i686-none-linux-android24 --gcc-toolchain=C:/Users/user/AppData/Local/Android/Sdk/ndk/23.1.7779620/toolchains/llvm/prebuilt/windows-x86_64 --sysroot=C:/Users/user/AppData/Local/Android/Sdk/ndk/23.1.7779620/toolchains/llvm/prebuilt/windows-x86_64/sysroot  -Dyolov5_EXPORTS -IC:/Users/user/AndroidStudioProjects/Android_NCNN_yolov4-tiny-master/app/src/main/cpp/ncnn/include  -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security   -fopenmp -fno-limit-debug-info  -fPIC   -o CMakeFiles\\yolov5.dir\\jni_interface.cpp.o -c C:\\Users\\user\\AndroidStudioProjects\\Android_NCNN_yolov4-tiny-master\\app\\src\\main\\cpp\\jni_interface.cpp",
+  "file": "C:\\Users\\user\\AndroidStudioProjects\\Android_NCNN_yolov4-tiny-master\\app\\src\\main\\cpp\\jni_interface.cpp"
+},
+
+{
+  "directory": "C:/Users/user/AndroidStudioProjects/Android_NCNN_yolov4-tiny-master/app/.cxx/Debug/f192v135/x86",
+  "command": "C:\\Users\\user\\AppData\\Local\\Android\\Sdk\\ndk\\23.1.7779620\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\clang++.exe --target=i686-none-linux-android24 --gcc-toolchain=C:/Users/user/AppData/Local/Android/Sdk/ndk/23.1.7779620/toolchains/llvm/prebuilt/windows-x86_64 --sysroot=C:/Users/user/AppData/Local/Android/Sdk/ndk/23.1.7779620/toolchains/llvm/prebuilt/windows-x86_64/sysroot  -Dyolov5_EXPORTS -IC:/Users/user/AndroidStudioProjects/Android_NCNN_yolov4-tiny-master/app/src/main/cpp/ncnn/include  -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security   -fopenmp -fno-limit-debug-info  -fPIC   -o CMakeFiles\\yolov5.dir\\YoloV5.cpp.o -c C:\\Users\\user\\AndroidStudioProjects\\Android_NCNN_yolov4-tiny-master\\app\\src\\main\\cpp\\YoloV5.cpp",
+  "file": "C:\\Users\\user\\AndroidStudioProjects\\Android_NCNN_yolov4-tiny-master\\app\\src\\main\\cpp\\YoloV5.cpp"
+}
+]

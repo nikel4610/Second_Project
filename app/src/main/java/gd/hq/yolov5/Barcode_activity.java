@@ -15,8 +15,7 @@ public class Barcode_activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_barcode);
-        scanBarcode();
+         scanBarcode();
     }
 
     public void scanBarcode() {
@@ -33,7 +32,7 @@ public class Barcode_activity extends AppCompatActivity {
             IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
             String re = scanResult.getContents();
             String message = re;
-            Log.d("onActivityResult", "onActivityResult: ." + re);
+            // Log.d("onActivityResult", "onActivityResult: ." + re);
             Toast.makeText(this, re, Toast.LENGTH_LONG).show();
         }
     }
