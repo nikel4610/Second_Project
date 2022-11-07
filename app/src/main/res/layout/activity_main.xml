@@ -6,15 +6,36 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#171c35"
+        app:layout_constraintBottom_toTopOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="130dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="7dp"
+        android:src='@drawable/app_logo'
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar"
+        app:layout_constraintStart_toStartOf="@+id/toolbar"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="14dp"
-        android:layout_marginBottom="42dp"
-        android:background="#A3CCA3"
-        android:src="#A3CCA3"
-        app:layout_constraintBottom_toTopOf="@+id/locationinfo"
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="60dp"
+        android:background="#c9e8fb"
+        android:src="#c9e8fb"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -23,31 +44,31 @@
     <TextureView
         android:id="@+id/view_finder"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="parent"
+        android:layout_height="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/toolbar" />
 
     <TextView
         android:id="@+id/valTxtView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
         android:text="Thresh:x.xx,NMS:x.xx"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/view"
-        app:layout_constraintTop_toBottomOf="@+id/locationinfo" />
+        app:layout_constraintBottom_toBottomOf="@+id/view"
+        app:layout_constraintStart_toStartOf="@+id/view" />
 
     <TextView
         android:id="@+id/tv_info"
-        android:layout_width="406dp"
-        android:layout_height="23dp"
-        android:layout_marginBottom="20dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="14dp"
         android:paddingLeft="5dp"
         android:paddingTop="2dp"
         android:text="000x000 FPS:x.xxx"
-        app:layout_constraintBottom_toTopOf="@+id/locationinfo"
-        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintBottom_toBottomOf="@+id/objectinfo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <TextView
@@ -60,21 +81,19 @@
         android:paddingTop="2dp"
         app:layout_constraintBottom_toTopOf="@+id/locationinfo"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/locationinfo"
-        android:layout_width="416dp"
+        android:layout_width="0dp"
         android:layout_height="25dp"
-        android:layout_marginBottom="21dp"
         android:gravity="fill_vertical"
         android:paddingLeft="5dp"
         android:paddingTop="2dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/valTxtView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toTopOf="@+id/valTxtView" />
 
     <View
         android:id="@+id/view"
@@ -89,10 +108,11 @@
         android:id="@+id/btnbarcode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="11dp"
-        android:text= "바코드"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="8dp"
         android:onClick="clickBtn"
-        app:layout_constraintEnd_toEndOf="@+id/tv_info"
-        app:layout_constraintTop_toBottomOf="@+id/tv_info" />
+        android:text="바코드"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
