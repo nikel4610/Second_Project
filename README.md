@@ -1,6 +1,6 @@
 <div align="center">
 
-# [시각장애인을 위한 어플](https://righteous-kileskus-db8.notion.site/08817662278542189d87382ec136fec5?p=8370947e434741c5b357d9661a11e0ae&pm=c)
+# [시각장애인을 위한 어플 노션](https://righteous-kileskus-db8.notion.site/08817662278542189d87382ec136fec5?p=8370947e434741c5b357d9661a11e0ae&pm=c)
 
 ![캡처 PNG](https://user-images.githubusercontent.com/73810942/204089349-fc30336e-bb60-4c52-af23-d7136873fe54.png)
 ![KakaoTalk_20221121_211135654](https://user-images.githubusercontent.com/73810942/204089699-ad7a4ba4-0c0d-4492-ac9e-513a1fad45a4.jpg)
