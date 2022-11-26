@@ -3,7 +3,7 @@
 # 시각장애인을 위한 어플
 
 ![캡처 PNG](https://user-images.githubusercontent.com/73810942/204089349-fc30336e-bb60-4c52-af23-d7136873fe54.png)
-![](../../Desktop/캡스톤/KakaoTalk_20221121_211135654.jpg)
+![KakaoTalk_20221121_211135654](https://user-images.githubusercontent.com/73810942/204089699-ad7a4ba4-0c0d-4492-ac9e-513a1fad45a4.jpg)
 
 <yolov4-tiny 모델을 이용해 물건을 인식하고 화면을 터치하면 음성으로 물건을 알려줌>  
 <화면을 꾹 눌러 음성으로 원하는 물건을 말하면 전방에 그 물건이 있을 시 음성으로 알려줌>
@@ -30,8 +30,8 @@
 ### 물건 찾는 기능에 집중 하기로 함  
   
 ToDos  
-~~1. 어플 디자인 찾아보고 계속 알려주기~~  해결
-~~2. yolo box 오른쪽 왼쪽 위치 알려주기~~ 해결
+~~1. 어플 디자인 찾아보고 계속 알려주기~~  해결  
+~~2. yolo box 오른쪽 왼쪽 위치 알려주기~~ 해결  
 3. 바코드 찍어서 제품 알려주기
 
 # Yolov4-tiny NCNN Implementation
